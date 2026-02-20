@@ -50,7 +50,10 @@ export async function generateTKAQuestions(selectedTopics: TopicSelection): Prom
     - L2 (Penerapan): 40%
     - L3 (Penalaran/HOTS): 30%
 
-    PENTING:
+    PENTING DAN WAJIB DIPERHATIKAN:
+    - PASTIKAN SOAL DAN JAWABAN SANGAT AKURAT, SESUAI, DAN DAPAT DIPERTANGGUNGJAWABKAN KEBENARANNYA.
+    - TIDAK BOLEH ADA KESALAHAN KUNCI JAWABAN.
+    - PENJELASAN (EXPLANATION) HARUS LOGIS, ILMIAH, DAN MENDUKUNG KUNCI JAWABAN SECARA TEPAT.
     - Gunakan variasi Pilihan Ganda, Pilihan Ganda Kompleks (MCMA), dan Benar/Salah (Kategori).
     - Pastikan 'correctAnswer' untuk Pilihan Ganda Kompleks adalah stringified JSON Array.
     - Pastikan 'correctAnswer' untuk Kategori adalah stringified JSON Object.
@@ -64,7 +67,7 @@ export async function generateTKAQuestions(selectedTopics: TopicSelection): Prom
         thinkingConfig: { thinkingBudget: 0 },
         responseMimeType: "application/json",
         responseSchema: QUESTION_SCHEMA,
-        temperature: 0.7
+        temperature: 0.2
       }
     });
 

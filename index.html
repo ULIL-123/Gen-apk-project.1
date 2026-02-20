@@ -106,8 +106,7 @@
             pointer-events: none;
         }
         @media print {
-            .no-print { display: none !important; }
-            body { background: white !important; color: black !important; }
+            body { display: none !important; }
         }
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: #020617; }
@@ -117,6 +116,22 @@
             border: 2px solid #020617;
         }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Security: Prevent text selection */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Allow selection in inputs and textareas for usability where needed (e.g. login) */
+        input, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
     </style>
 <script type="importmap">
 {
@@ -143,6 +158,43 @@
     <script type="module" src="./index.tsx"></script>
 
     <script>
+        // Security: Block Right Click
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        // Security: Block Copy, Cut, Paste with Warning
+        document.addEventListener('copy', (e) => {
+            e.preventDefault();
+            if (e.clipboardData) {
+                e.clipboardData.setData('text/plain', 'Konten Dilindungi - EduGen TKA SD');
+            }
+            return false;
+        });
+        document.addEventListener('cut', (e) => e.preventDefault());
+        document.addEventListener('paste', (e) => e.preventDefault());
+
+        // Security: Block common developer shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Block F12
+            if (e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            // Block Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U
+            if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && e.keyCode === 85) {
+                e.preventDefault();
+                return false;
+            }
+            // Block Ctrl+S, Ctrl+P
+            if (e.ctrlKey && (e.keyCode === 83 || e.keyCode === 80)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js').then(reg => {
